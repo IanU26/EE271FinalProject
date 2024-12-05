@@ -3,17 +3,19 @@
 
 module seg7c(
     input clk_100MHz,               // Nexys A7 clock
-    input [7:0] c_data,             // Temp data from i2c master
+    input [7:0] display_data,       // Temp data from i2c master
     input [7:0] f_data,             // Temp data from temp converter
     output reg [6:0] SEG,           // 7 Segments of Displays
-    output reg [7:0] AN             // 4 Anodes of 8 to display Temp C
+    output reg [7:0] AN             // 4 Anodes of 8 to display Temp 
     );
     
     // Binary to BCD conversion of temperature data
     wire [3:0] f_tens, f_ones;
+    wire [3:0] display_tens, display_ones;
     assign f_tens = f_data / 10;           // Tens value of C temp data
     assign f_ones = f_data % 10;           // Ones value of C temp data 
-    
+    assign display_tens = display_data / 10;           // Tens value of C temp data
+    assign display_ones = display_data % 10;           // Ones value of C temp data 
     // Parameters for segment patterns
     parameter ZERO  = 7'b000_0001;  // 0
     parameter ONE   = 7'b100_1111;  // 1
@@ -59,14 +61,14 @@ module seg7c(
     
     always @*
         case(anode_select)
-/*Use these to set the desired temp
+//Use these to set the desired temp
 
-            3'o0 : SEG = C;    // Set to C for Celsuis
+            3'o0 : SEG = F;    // Set to C for Celsuis
                         
             3'o1 : SEG = DEG;  // Set to degrees symbol
                     
             3'o2 : begin       // C TEMPERATURE ONES DIGIT
-                        case(c_ones)
+                        case(display_ones)
                             4'b0000 : SEG = ZERO;
                             4'b0001 : SEG = ONE;
                             4'b0010 : SEG = TWO;
@@ -81,7 +83,7 @@ module seg7c(
                     end
                     
             3'o3 : begin       // C TEMPERATURE TENS DIGIT
-                        case(c_tens)
+                        case(display_tens)
                             4'b0000 : SEG = ZERO;
                             4'b0001 : SEG = ONE;
                             4'b0010 : SEG = TWO;
@@ -95,7 +97,7 @@ module seg7c(
                         endcase
                     end
 
-*/
+
             3'o4 : SEG = F;    // Set to F for Fahrenheit
                         
             3'o5 : SEG = DEG;  // Set to degrees symbol
