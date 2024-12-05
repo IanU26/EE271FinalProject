@@ -2,8 +2,17 @@
 set_property -dict { PACKAGE_PIN E3    IOSTANDARD LVCMOS33 } [get_ports { CLK100MHZ }]; #IO_L12P_T1_MRCC_35 Sch=clk100mhz
 create_clock -add -name sys_clk_pin -period 10.00 -waveform {0 5} [get_ports {CLK100MHZ}];
 ## Selection switches
+set_property -dict { PACKAGE_PIN M13   IOSTANDARD LVCMOS33 } [get_ports { rst }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
 set_property -dict { PACKAGE_PIN L16   IOSTANDARD LVCMOS33 } [get_ports { selectionSW[1] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
 set_property -dict { PACKAGE_PIN J15   IOSTANDARD LVCMOS33 } [get_ports { selectionSW[0] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
+set_property -dict { PACKAGE_PIN V10   IOSTANDARD LVCMOS33 } [get_ports { desired_temp[7] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
+set_property -dict { PACKAGE_PIN U11   IOSTANDARD LVCMOS33 } [get_ports { desired_temp[6] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
+set_property -dict { PACKAGE_PIN U12   IOSTANDARD LVCMOS33 } [get_ports { desired_temp[5] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
+set_property -dict { PACKAGE_PIN H6   IOSTANDARD LVCMOS33 } [get_ports { desired_temp[4] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
+set_property -dict { PACKAGE_PIN T13   IOSTANDARD LVCMOS33 } [get_ports { desired_temp[3] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
+set_property -dict { PACKAGE_PIN R16   IOSTANDARD LVCMOS33 } [get_ports { desired_temp[2] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
+set_property -dict { PACKAGE_PIN U8   IOSTANDARD LVCMOS33 } [get_ports { desired_temp[1] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
+set_property -dict { PACKAGE_PIN T8   IOSTANDARD LVCMOS33 } [get_ports { desired_temp[0] }]; #IO_L1N_T0_AD0N_15 Sch=tmp_scl
 ## LEDs
 set_property -dict { PACKAGE_PIN H17   IOSTANDARD LVCMOS33 } [get_ports { LED[0] }]; #IO_L18P_T2_A24_15 Sch=led[0]
 set_property -dict { PACKAGE_PIN K15   IOSTANDARD LVCMOS33 } [get_ports { LED[1] }]; #IO_L24P_T3_RS1_15 Sch=led[1]
@@ -21,6 +30,8 @@ set_property -dict { PACKAGE_PIN V15   IOSTANDARD LVCMOS33 } [get_ports { LED[12
 set_property -dict { PACKAGE_PIN V14   IOSTANDARD LVCMOS33 } [get_ports { LED[13] }]; #IO_L22N_T3_A04_D20_14 Sch=led[13]
 set_property -dict { PACKAGE_PIN V12   IOSTANDARD LVCMOS33 } [get_ports { LED[14] }]; #IO_L20N_T3_A07_D23_14 Sch=led[14]
 set_property -dict { PACKAGE_PIN V11   IOSTANDARD LVCMOS33 } [get_ports { LED[15] }]; #IO_L21N_T3_DQS_A06_D22_14 Sch=led[15]
+set_property -dict { PACKAGE_PIN N15   IOSTANDARD LVCMOS33 } [get_ports { redLED }]; #IO_L21N_T3_DQS_A06_D22_14 Sch=led[15]
+set_property -dict { PACKAGE_PIN R12   IOSTANDARD LVCMOS33 } [get_ports { blueLED }]; #IO_L21N_T3_DQS_A06_D22_14 Sch=led[15]
 
 ##7 segment display
 set_property -dict { PACKAGE_PIN T10   IOSTANDARD LVCMOS33 } [get_ports { SEG[6] }]; #IO_L24N_T3_A00_D16_14 Sch=ca
