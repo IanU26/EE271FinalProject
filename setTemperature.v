@@ -9,9 +9,9 @@ module setTemperature(
     input [1:0]   selectionSW,   // Used to select which output to display. Bind to switches
     input         CLK100MHZ,        // nexys clk signal
     input [7:0] c_data,             // Temp data from i2c master
-    output [7:0] Display               // nexys leds = binary temp in deg F, 15-8 (set temp) 7-0 (current temp)
+    output reg[7:0] display_reg               // nexys leds = binary temp in deg F, 15-8 (set temp) 7-0 (current temp)
     );
-    reg [7:0] display_reg;
+    //reg [7:0] display_reg;
     
     always@(posedge CLK100MHZ)begin
         case(selectionSW)
@@ -31,5 +31,5 @@ module setTemperature(
        
     
     end
-    assign Display = display_reg;
+    //assign Display = display_reg;
 endmodule
