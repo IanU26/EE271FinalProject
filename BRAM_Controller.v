@@ -20,8 +20,8 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 module BRAM_Controller ( 
-    input wire clk, 
-    input wire rst, 
+    input wire clk,     //Nexys A7 clock
+    input wire rst,     //Reset signal for min/max/average
     input wire [7:0] new_temp, 
     input wire new_temp_valid, 
     output reg [7:0] avg_temp, 
@@ -43,6 +43,23 @@ module BRAM_Controller (
         .douta(bram_data_out) 
     ); 
     
+    
+    
+    //Attempt at slower clock. 1Hz. Did not work when implemented in the always block below.
+    reg [7:0] counter = 26'h00;
+    reg clk_reg = 1'b1;
+    
+    always @(posedge clk) begin
+        if(counter == 27'd99999999) begin
+            counter <= 27'd0;
+            clk_reg <= ~clk_reg;
+        end
+        else
+            counter <= counter + 1;
+    end
+    
+    
+    
 // Control logic 
 reg [3:0] write_pointer; 
 reg [7:0] temp_sum; 
@@ -55,8 +72,8 @@ always @(posedge clk or posedge rst) begin
         bram_addr <= 4'd0; 
         bram_we <= 1'b0; 
         avg_temp <= 8'd0; 
-        max_temp <= 8'd0; 
-        min_temp <= 8'd255; 
+        max_temp <= 8'd255; 
+        min_temp <= 8'd0; 
         temp_sum <= 8'd0; 
     end 
     else if (new_temp_valid) begin 
