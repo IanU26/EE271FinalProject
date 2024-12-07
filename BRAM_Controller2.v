@@ -12,7 +12,7 @@ module BRAMController (
      reg [3:0] write_pointer = 0; // Pointer for circular buffer 
      // Temporary variables for calculations 
      reg [11:0] temp_sum; // 12 bits to hold sum of 10 8-bit values 
-     integer i; // Loop variable 
+     integer i; // Loop variable  
      
     
     reg [7:0] counter = 26'h00;
