@@ -8,7 +8,7 @@
 // Description: Temperature controller with ADT7420 temp sensor aboard Nexys A7
 //              - temperature read out on 8 LEDs and 7 Segment Displays
 //              - desired temperature setting
-//              - 
+//
 //////////////////////////////////////////////////////////////////////////////////
 module top(
     input         selection,
@@ -72,7 +72,7 @@ setTemperature set(
     .CLK100MHZ(CLK100MHZ),
     .display_reg(display_data)
     );
-    /*
+    
     // Instantiate BRAM, possibly completed through the BRAM controller below
     BRAM_TemperatureValues bram_inst( 
     .clka(CLK100MHZ), // Connect to your clock signal 
@@ -82,7 +82,8 @@ setTemperature set(
     .dina(bram_data_in), // Data input for write operations 
     .douta(bram_data_out) // Data output for read operations 
     );
-    */
+    
+/*
 BRAM_Controller bram( 
     .clk(CLK100MHZ),     //Nexys A7 clock
     .rst(rst),     //Reset signal for min/max/average
@@ -92,7 +93,27 @@ BRAM_Controller bram(
     .max_temp(max_temp), 
     .min_temp(min_temp) 
     ); 
-    
+ */
+ BRAMController bram( 
+    .clk(CLK100MHZ),     //Nexys A7 clock
+    .rst(rst),     //Reset signal for min/max/average
+    .new_temp(f_data), 
+    .new_temp_valid(1'b1), 
+    .avg_temp(ave_temp), 
+    .max_temp(max_temp), 
+    .min_temp(min_temp) 
+    );
+/*
+BRAMController3 bram( 
+    .clk(CLK100MHZ),     //Nexys A7 clock
+    .rst(rst),     //Reset signal for min/max/average
+    .new_temp(f_data), 
+    .new_temp_valid(1'b1), 
+    .avg_temp(ave_temp), 
+    .max_temp(max_temp), 
+    .min_temp(min_temp) 
+    );
+  */  
 temp_controller heater_ac(
     .clk(CLK100MHZ),
     .current_temp(f_data),
