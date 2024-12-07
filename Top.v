@@ -26,6 +26,7 @@ module top(
     );
     
     wire w_200KHz;                  // 200kHz SCL
+    wire w_1Hz;                  // 200kHz SCL
     wire [7:0] c_data;              // 8 bits of Celsius temperature data
     wire [7:0] f_data;              // 8 bits of Fahrenheit temperature data
     wire [7:0] display_data;        // 8 bits of display temp (set temp/average temp/etc)
@@ -48,7 +49,11 @@ clkgen_200KHz clkgen(
     .clk_100MHz(CLK100MHZ),
     .clk_200KHz(w_200KHz)
     );
-    
+   
+clkgen_1Hz clkgen1(
+    .clk_100MHz(CLK100MHZ),
+    .clk_1Hz(w_1Hz)
+    ); 
     // Displays temp values on 7 segment display. 
 seg7c segcontrol(
     .clk_100MHz(CLK100MHZ),
@@ -83,19 +88,9 @@ setTemperature set(
     .douta(bram_data_out) // Data output for read operations 
     );
     
-/*
-BRAM_Controller bram( 
-    .clk(CLK100MHZ),     //Nexys A7 clock
-    .rst(rst),     //Reset signal for min/max/average
-    .new_temp(f_data), 
-    .new_temp_valid(1'b1), 
-    .avg_temp(ave_temp), 
-    .max_temp(max_temp), 
-    .min_temp(min_temp) 
-    ); 
- */
+
  BRAMController bram( 
-    .clk(CLK100MHZ),     //Nexys A7 clock
+    .clk(w_1Hz),     //Nexys A7 clock
     .rst(rst),     //Reset signal for min/max/average
     .new_temp(f_data), 
     .new_temp_valid(1'b1), 
@@ -103,17 +98,7 @@ BRAM_Controller bram(
     .max_temp(max_temp), 
     .min_temp(min_temp) 
     );
-/*
-BRAMController3 bram( 
-    .clk(CLK100MHZ),     //Nexys A7 clock
-    .rst(rst),     //Reset signal for min/max/average
-    .new_temp(f_data), 
-    .new_temp_valid(1'b1), 
-    .avg_temp(ave_temp), 
-    .max_temp(max_temp), 
-    .min_temp(min_temp) 
-    );
-  */  
+
 temp_controller heater_ac(
     .clk(CLK100MHZ),
     .current_temp(f_data),
@@ -121,7 +106,5 @@ temp_controller heater_ac(
     .red(redLED),
     .blue(blueLED)
     );
-    //assign LED[15:8] = f_data;
-    //assign LED[7:0] = display_data;
-    //assign LED[7:0]  = c_data;
+    
 endmodule
